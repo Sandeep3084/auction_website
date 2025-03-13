@@ -1,0 +1,116 @@
+NAME,STRENGTH,STAMINA,DEXTERITY,INTELLIGENCE,MAGIC,ANIME,avg star rating
+naruto,3.7,4,3.3,1.2,3.7,Naruto,3.18
+kaneki,3,3,3.3,3,0.3,Tokyo Ghoul,2.52
+kazuma,1,1.8,2,1.9,2,Konosuba,1.74
+mob,3.9,1,2.5,3.7,4.6,Mob Psycho 100,3.14
+happy,0.4,0.6,0.8,0.2,0.5,Fairy Tail,0.5
+mumen rider,1.1,2.8,2.2,1.7,0.1,One Punch Man,1.58
+genos,3.9,3.7,3.8,1,1.2,One Punch Man,2.72
+sung jinwoo,4,4,4.8,4.5,4.7,Solo Levelling,4.4
+deku,4.2,2.5,3.8,3.5,2,Boku no Hero Academia,3.2
+megumin,0.5,-1,1,2,3.9,Konosuba,1.28
+killua,2,2.7,4.5,3.8,2.6,Hunter x Hunter,3.12
+lucky man,0.5,1,1,0.2,5,Lucky Man,1.54
+mustang,1.6,2.8,1.8,2.9,3.4,Fullmetal Alchemist: Brotherhood,2.5
+milim,4.1,4,2.8,0.2,4.4,That Time I Got Reincarnated as a Slime,3.1
+yuno,2,2.8,2,3.2,3.6,Black Clover,2.72
+Touka,2.2,2.4,2.3,2.7,0.3,Tokyo Ghoul,1.98
+saitama,5,5,5,-1,0,One Punch Man,2.8
+gilgamesh,3,3.1,2.9,2.7,4.9,Fate/Stay Night,3.32
+rimuru tempest,3.5,3.7,4.2,4.2,4.4,That Time I Got Reincarnated as a Slime,4
+yoo jinho,1,1.2,0.5,0.8,1.3,Solo Levelling,0.96
+gojo,3.3,3.8,3,3.7,4,Jujutsu Kaisen,3.56
+sukuna,4,4,2.5,3,4.4,Jujutsu Kaisen,3.58
+itachi,3.4,3.8,3,4.2,3.5,Naruto,3.58
+yor forger,1.5,2.5,2.8,0.5,0,Spy x Family,1.46
+guts,2.5,4,1.5,2.2,1.3,Berserk,2.3
+baki hanma,3.7,3,3.5,-0.5,0,Baki,1.94
+saiki k,1,0.5,1,4.3,1,Saiki K,1.56
+hisoka,2.3,2.5,2.8,4,3.3,Hunter x Hunter,2.98
+edward elric,2.2,3,3.2,3.7,2.8,Fullmetal Alchemist: Brotherhood,2.98
+frieren,0.5,2,2,4.5,4.6,Frieren: Beyond Journey's End,2.72
+fern,0.6,2,1,3.3,3.8,Frieren: Beyond Journey's End,2.14
+stark,3.8,3.9,2.5,1.5,0,Frieren: Beyond Journey's End,2.34
+noelle silva,1.3,1.5,1.4,1.3,3,Black Clover,1.7
+yami,2.5,3,3.3,3,3.5,Black Clover,3.06
+osamu dazai,1.2,0.4,1.2,4.2,3,Bungo Stray Dogs,2
+chuuya,2.8,2.4,2.1,1,4.5,Bungo Stray Dogs,2.56
+akutagawa,3,2,3.3,3,3,Bungo Stray Dogs,2.86
+aizen,2.4,2.3,2,4.1,3.2,Bleach,2.8
+ichigo,3.8,4,2.9,2.4,2.8,Bleach,3.18
+yhwach,4.1,3.7,3.8,4,4.8,Bleach,4.08
+luffy,2.8,3,3.2,0.2,3.6,One Piece,2.56
+zoro,3.6,3.2,3.3,0.5,2.1,One Piece,2.54
+shanks,3.5,3,2.4,3.3,3.6,One Piece,3.16
+natsu,3.9,4.1,3.1,1.4,3.9,Fairy Tail,3.28
+gray,2.5,2.5,2.8,2.6,3.8,Fairy Tail,2.84
+lucy,2.5,2.3,2.5,2,3.6,Fairy Tail,2.58
+asta,4.3,4,3.7,0.5,0,Black Clover,2.5
+Tsunade,3.7,2.5,1.1,3.4,3,Naruto,2.74
+Saber,3.7,1.8,2,2.5,4.1,Fate/Stay Night,2.82
+Archer,2,3.7,4.7,4,4.8,Fate/Stay Night,3.84
+Aqua,0.2,0.1,0.2,-1.5,2,Konosuba,0.2
+Diablo,4,4,4,4,4.1,That Time I Got Reincarnated as a Slime,4.02
+Makima,1,1.5,0.8,3.7,3,Chainsaw Man,2
+Reze,1.5,2.5,2,3.2,3.9,Chainsaw Man,2.62
+Angel,0.3,0.4,2.5,2.8,3,Chainsaw Man,1.8
+Tenten,0.5,1.5,1.7,2.5,0.6,Naruto,1.36
+Mineta,0.5,0.7,0.9,0.3,0.6,Boku no Hero Academia,0.6
+Konohamaru,2,1.5,1.3,1,2,Naruto,1.56
+Kobeni,1.5,1.5,2.5,1.8,0,Chainsaw Man,1.46
+Tomato Devil,1,0.7,0.3,0,1,Chainsaw Man,0.6
+yuta,3.9,3.5,4.5,4.2,4.6,Jujutsu Kaisen,4.14
+Ainz Ooal Gown,3.7,3.9,4,3.9,4.7,Overlord,4.04
+Tanya,2,2.4,3,3.8,4,Youjo Senki,3.04
+Chika Fujiwara,0.2,0.8,0.6,-0.3,0,Kaguya-sama: Love is War,0.26
+Hori,0.3,1.3,0.7,2.3,0,Horimiya,0.92
+Kirito,1,1.7,1.3,2,0,Sword Art Online,1.2
+Asuna,1,1.4,1.2,1.9,0,Sword Art Online,1.1
+Ozymandias,4.3,4.4,3.8,4.1,4.8,Fate/Stay Night,4.28
+Sora,-0.1,-0.1,0.3,5,0,No Game No Life,1.02
+Shinji,0.4,1.1,0.5,1.5,0,Neon Genesis Evangelion,0.7
+Asuka,0.7,1.5,0.5,1.5,0,Neon Genesis Evangelion,0.84
+Kobayashi,0.3,1.1,0.4,2.5,0,Miss Kobayashi's Dragon Maid,0.86
+Anos Voldigoad,4.5,4,4.1,4,4.9,The Misfit of Demon King Academy,4.3
+Kongming,0.2,0.7,0.7,3.2,0.1,Ya Boy Kongming!,0.98
+Komi,0.4,0.2,0.1,0.3,0,Komi Can't Communicate,0.2
+Maple,3,3,-1,2,2.1,Bofuri,1.82
+Jashin Chan,3,1.5,3.9,-0.4,0.5,Dropkick on My Devil!,1.7
+Mashiro,0.1,0.1,1.9,2.1,0,The Pet Girl of Sakurasou,0.84
+Sakuta,0.7,1.1,1,2,0,Rascal does not Dream of Bunny Girl Senpai,0.96
+2B,3.2,3.3,3.8,3.2,1.6,Nier: Automata,3.02
+Ruby,0.3,1,0.3,1.7,0.1,Oshi no Ko,0.68
+Ai,0.3,0.1,0,0.3,0.2,Oshi no Ko,0.18
+Joker,2.4,2,4,2.7,4.2,Persona 5,3.06
+Gintoki,2.8,2.8,3.2,3,0,Gintama,2.36
+Zura,2.5,2,3,3,0,Gintama,2.1
+Erza,3.7,3,3.9,2.5,3.8,Fairy Tail,3.38
+Dio,4,3,3,3.5,4.5,Jojo's Bizarre Adventure,3.6
+Jotaro,4,3,3,3.8,4.5,Jojo's Bizarre Adventure,3.66
+Yusuke,3,4,2.2,1.7,2.5,Yu Yu Hakusho,2.68
+Hiei,3,3.8,3,2.5,3,Yu Yu Hakusho,3.06
+Usagi,3,4,3,3.5,4.8,Sailor Moon,3.66
+Tuxedo mask,3,3,3.5,3.5,4.6,Sailor Moon,3.52
+Koro sensei,3,3.5,5,3.5,0,Assassination Classroom,3
+accelerator,2,2,4.2,4.6,4.5,A Certain Scientific Railgun,3.46
+merlin,3.4,-5,1.5,5,5,Fate/Grand Order,1.98
+adam,4.5,4,5,3,4,Record of Ragnarok,4.1
+Rudeus,2.5,3.5,2.5,3.5,5,Mushoku Tensei,3.4
+9S,2.5,3.1,2.6,3.9,3,Nier: Automata,3.02
+wangling,5,3,4.7,3,5,The Daily Life of the Immortal King,4.14
+Araragi,2.5,2.5,2.5,2.5,2.5,Monogatari,2.5
+Meme,1,1,1,3.5,1,Monogatari,1.5
+Tanjiro,2.2,2.5,2,1.5,0,Demon Slayer: Kimetsu no Yaiba,1.64
+Nezuko,2.7,0.2,2.3,1,1,Demon Slayer: Kimetsu no Yaiba,1.44
+Zenitsu,2.2,1,2.5,0.5,0,Demon Slayer: Kimetsu no Yaiba,1.24
+Inosuke,2.3,3,3,-3,0,Demon Slayer: Kimetsu no Yaiba,1.06
+Eren,2,3,3.5,1.5,1,Attack on Titan,2.2
+Mikasa,1.3,2,2.7,1,0,Attack on Titan,1.4
+Levi,1.4,2.5,3,1.8,0,Attack on Titan,1.74
+kurumi,-1,0.5,0.3,1.2,4,Date a Live,1
+mio,-1,0.3,0.3,0.7,4.3,Date a Live,0.92
+tohka,-1,0.7,0.3,0.3,4,Date a Live,0.86
+kotori,-1,0.3,0.3,1,3.8,Date a Live,0.88
+giorno,3,2,3.5,2.7,4.8,Jojo's Bizarre Adventure,3.2
+goku,3.5,3.2,4.1,1.9,4,Dragon Ball Z,3.34
+foot soldier d,0.5,3,0.7,1.7,2,Go! Go! Loser Ranger!,1.58
