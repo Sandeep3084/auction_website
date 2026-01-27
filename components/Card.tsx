@@ -1,0 +1,152 @@
+"use client";
+
+import { Character, Attribute } from "@/lib/types";
+import { Star, Swords, Zap, Activity, Brain, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+
+interface CardProps {
+    character: Character;
+    isRevealed?: boolean;
+    onClick?: () => void;
+    className?: string;
+    isOverlay?: boolean;
+}
+
+const ATTRIBUTE_ICONS: Record<Attribute, React.ElementType> = {
+    strength: Swords,
+    stamina: Activity,
+    dexterity: Zap,
+    intelligence: Brain,
+    magic: Sparkles,
+};
+
+const formatStatLabel = (key: string) => {
+    const map: Record<string, string> = {
+        strength: "STR",
+        stamina: "STA",
+        dexterity: "DEX",
+        intelligence: "INT",
+        magic: "MAG"
+    };
+    return map[key] || key.substring(0, 3).toUpperCase();
+};
+
+export function Card({ character, isRevealed = false, onClick, className = "", isOverlay = false }: CardProps) {
+    const imagePath = `/images/${character.name.toLowerCase().replace(/ /g, "_")}.webp`;
+    const isHolographic = character.avgRating >= 4;
+
+    // MASSIVE BURST PARTICLES
+    const particles = Array.from({ length: 60 }).map((_, i) => ({
+        id: i,
+        angle: (Math.random() * 360) * (Math.PI / 180),
+        distance: 200 + Math.random() * 250,
+        delay: Math.random() * 0.2,
+        size: Math.random() * 6 + 3,
+        duration: 0.6 + Math.random() * 0.8
+    }));
+
+    return (
+        <div
+            className={`tcg-card cursor-pointer group ${isRevealed ? "flipped" : ""} ${isOverlay && !isRevealed ? "locked-hover" : ""} ${className}`}
+            onClick={onClick}
+        >
+            <div className="tcg-content relative">
+                {/* BACK FACE */}
+                <div className="tcg-back">
+                    <div className="tcg-back-content">
+                        <div className="absolute inset-0 opacity-20">
+                            <Image src="/images/animania.webp" alt="Back" fill className="object-cover grayscale" />
+                        </div>
+
+                        <div className="z-10 text-center p-4">
+                            <h3 className="text-xl font-black bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 bg-clip-text text-transparent uppercase tracking-widest drop-shadow-sm">
+                                {character.anime}
+                            </h3>
+                            {!isOverlay && (
+                                <span className="text-xs text-zinc-400 mt-3 block font-bold border border-zinc-700/50 px-3 py-1.5 rounded-full bg-zinc-950/80 tracking-widest">
+                                    TAP TO REVEAL
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* FRONT FACE */}
+                <div className={`tcg-front ${isHolographic && isRevealed ? "holographic" : ""}`}>
+                    <div className="img">
+                        <Image src={imagePath} alt={character.name} fill className="object-cover" priority={isOverlay} />
+
+                        <div className="circle"></div>
+                        <div className="circle" id="right"></div>
+                        <div className="circle" id="bottom"></div>
+                    </div>
+
+                    <div className="tcg-front-content">
+                        <div className="flex justify-between items-start w-full">
+                            <small className="badge flex items-center gap-1.5 text-xs font-bold text-white shadow-lg border-yellow-500/30">
+                                <Star className={`w-3 h-3 ${isHolographic ? 'text-yellow-300 fill-yellow-300 animate-pulse' : 'text-zinc-400'}`} />
+                                {character.avgRating.toFixed(2)}
+                            </small>
+
+                            {isHolographic && (
+                                <div className="px-2 py-0.5 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-[9px] font-black text-black uppercase tracking-tighter shadow-lg transform rotate-2 border border-white/20">
+                                    Rare
+                                </div>
+                            )}
+                        </div>
+
+                        {/* COMPACTED DESCRIPTION */}
+                        <div className="tcg-description !p-2 !backdrop-blur-xl !bg-black/70 border-t border-white/10">
+                            <div className="tcg-title mb-1.5">
+                                <p className="font-black text-white text-sm capitalize tracking-tight drop-shadow-md leading-tight">
+                                    {character.name}
+                                </p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9px] text-zinc-400 font-mono">
+                                {(Object.keys(ATTRIBUTE_ICONS) as Attribute[]).map(attr => (
+                                    <div key={attr} className="flex justify-start gap-3 items-center group/stat">
+                                        <span className="uppercase font-bold text-zinc-500 group-hover/stat:text-zinc-300 transition-colors w-6">
+                                            {formatStatLabel(attr)}
+                                        </span>
+                                        <span className={`font-bold ${character[attr] >= 4 ? 'text-yellow-400' : 'text-zinc-100'}`}>
+                                            {character[attr]}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {isHolographic && isRevealed && (
+                    <div
+                        className="sparkle-container absolute inset-0 overflow-visible pointer-events-none z-50"
+                        style={{ transform: "rotateY(180deg) translateZ(2px)" }}
+                    >
+                        {particles.map((p) => (
+                            <motion.div
+                                key={p.id}
+                                initial={{ x: 0, y: 0, scale: 0, opacity: 0 }}
+                                animate={{
+                                    x: Math.cos(p.angle) * p.distance,
+                                    y: Math.sin(p.angle) * p.distance,
+                                    scale: [0, 1.5, 0],
+                                    opacity: [1, 1, 0]
+                                }}
+                                transition={{
+                                    duration: p.duration,
+                                    ease: "easeOut",
+                                    delay: p.delay,
+                                }}
+                                className="absolute top-1/2 left-1/2 bg-yellow-300 rounded-full shadow-[0_0_10px_4px_rgba(255,215,0,0.8)]"
+                                style={{ width: p.size, height: p.size }}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
