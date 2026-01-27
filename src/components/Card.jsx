@@ -11,14 +11,14 @@ const Card = ({ character, assignToTeam }) => {
     <div className="relative bg-white rounded-xl shadow-lg w-80 h-[450px] border-4 border-purple-500 overflow-hidden group">
       {/* Default Image Section */}
       <img
-        src={`/images/animania.jpg`} // Default placeholder image
+        src={`/images/animania.webp`} // Default placeholder image
         alt="Default"
         className="w-full h-full object-cover group-hover:hidden"
       />
 
       {/* Character Image (Visible on Hover) */}
       <img
-        src={`/images/${character.NAME.toLowerCase()}.jpg`}
+        src={`/images/${character.NAME.toLowerCase()}.webp`}
         alt={character.NAME}
         className="w-full h-full object-cover hidden group-hover:block"
       />
@@ -53,7 +53,7 @@ const Card = ({ character, assignToTeam }) => {
         onClick={toggleStats}
         className="absolute top-2 right-2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition"
       >
-        
+
       </button>
 
       {/* Stats Modal */}
