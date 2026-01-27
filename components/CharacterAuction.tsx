@@ -15,6 +15,7 @@ export function CharacterAuction() {
     const [loading, setLoading] = useState(true);
     const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
     const [isRevealed, setIsRevealed] = useState(false);
+    const [revealedNames, setRevealedNames] = useState<Set<string>>(new Set());
 
     const [currentPage, setCurrentPage] = useState(1);
     const ITEMS_PER_PAGE = 6;
@@ -41,7 +42,7 @@ export function CharacterAuction() {
                                 intelligence: parseFloat(row.INTELLIGENCE) || 0,
                                 magic: parseFloat(row.MAGIC) || 0,
                                 anime: row.ANIME,
-                                avgRating: parseFloat(row['avg star rating']) || 0,
+                                avgRating: ((parseFloat(row.STRENGTH) || 0) + (parseFloat(row.STAMINA) || 0) + (parseFloat(row.DEXTERITY) || 0) + (parseFloat(row.INTELLIGENCE) || 0) + (parseFloat(row.MAGIC) || 0)) / 5,
                             }));
                         setCharacters(parsedCharacters);
                         setLoading(false);
@@ -60,6 +61,7 @@ export function CharacterAuction() {
         let timer: NodeJS.Timeout;
         if (selectedCharacter) {
             setIsRevealed(false);
+
             timer = setTimeout(() => {
                 setIsRevealed(true);
             }, 600);
@@ -72,6 +74,13 @@ export function CharacterAuction() {
     const totalPages = Math.ceil(characters.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const visibleCharacters = characters.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    const handleCloseOverlay = () => {
+        if (selectedCharacter) {
+            setRevealedNames(prev => new Set(prev).add(selectedCharacter.name));
+        }
+        setSelectedCharacter(null);
+    };
 
     if (loading) {
         return (
@@ -113,7 +122,7 @@ export function CharacterAuction() {
                         initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
                         animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
                         exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        onClick={() => setSelectedCharacter(null)}
+                        onClick={handleCloseOverlay}
                         className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
                     >
                         {/* FIXED CLOSE BUTTON */}
@@ -123,7 +132,7 @@ export function CharacterAuction() {
                             exit={{ opacity: 0, scale: 0.5 }}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setSelectedCharacter(null);
+                                handleCloseOverlay();
                             }}
                             className="fixed top-6 right-6 p-4 bg-zinc-800/80 hover:bg-zinc-700 text-white rounded-full z-[60] backdrop-blur-md border border-white/10 shadow-lg cursor-pointer group"
                         >
@@ -161,17 +170,7 @@ export function CharacterAuction() {
                     <h1 className="text-5xl md:text-7xl font-black tracking-tighter bg-gradient-to-b from-yellow-300 via-orange-400 to-red-600 bg-clip-text text-transparent uppercase font-[family-name:var(--font-geist-mono)] drop-shadow-[0_2px_10px_rgba(255,100,0,0.5)]">
                         Anime<span className="text-white">Auction</span>
                     </h1>
-                    {visibleCharacters.length > 0 && (
-                        <div className="flex items-center gap-2 px-4 py-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10 shadow-xl">
-                            <span className="text-zinc-400 text-sm font-bold uppercase tracking-wider">Avg Rating</span>
-                            <div className="flex items-center gap-1.5 text-yellow-400">
-                                <span className="text-xl font-black font-mono">
-                                    {(visibleCharacters.reduce((acc, char) => acc + char.avgRating, 0) / visibleCharacters.length).toFixed(2)}
-                                </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-star mb-0.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                            </div>
-                        </div>
-                    )}
+
                 </header>
 
                 <main className={`transition-all duration-500 ${selectedCharacter ? 'scale-95 pointer-events-none' : ''}`}>
@@ -181,6 +180,7 @@ export function CharacterAuction() {
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageChange={setCurrentPage}
+                        revealedNames={revealedNames}
                     />
                 </main>
             </div>

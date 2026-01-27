@@ -34,7 +34,8 @@ const formatStatLabel = (key: string) => {
 
 export function Card({ character, isRevealed = false, onClick, className = "", isOverlay = false }: CardProps) {
     const imagePath = `/images/${character.name.toLowerCase().replace(/ /g, "_")}.webp`;
-    const isHolographic = character.avgRating >= 4;
+    const isGold = Math.max(character.strength, character.stamina, character.dexterity, character.intelligence, character.magic) === 5;
+    const isHolo = character.avgRating >= 4;
 
     // MASSIVE BURST PARTICLES
     const particles = Array.from({ length: 60 }).map((_, i) => ({
@@ -54,15 +55,20 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
             <div className="tcg-content relative">
                 {/* BACK FACE */}
                 <div className="tcg-back">
-                    <div className="tcg-back-content">
+                    <div className="tcg-back-content overflow-hidden rounded-[10px]">
                         <div className="absolute inset-0 opacity-20">
                             <Image src="/images/animania.webp" alt="Back" fill className="object-cover grayscale" />
                         </div>
 
                         <div className="z-10 text-center p-4">
-                            <h3 className="text-xl font-black bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 bg-clip-text text-transparent uppercase tracking-widest drop-shadow-sm">
+                            <h3 className={`${character.anime.length > 20 ? "text-base leading-tight" : "text-xl leading-normal"} font-black bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 bg-clip-text text-transparent uppercase tracking-widest drop-shadow-sm`}>
                                 {character.anime}
                             </h3>
+
+                            <div className="flex items-center justify-center gap-1.5 mt-2 mb-1">
+                                <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                                <span className="text-white font-bold font-mono text-sm">{character.avgRating.toFixed(2)}</span>
+                            </div>
                             {!isOverlay && (
                                 <span className="text-xs text-zinc-400 mt-3 block font-bold border border-zinc-700/50 px-3 py-1.5 rounded-full bg-zinc-950/80 tracking-widest">
                                     TAP TO REVEAL
@@ -73,7 +79,7 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
                 </div>
 
                 {/* FRONT FACE */}
-                <div className={`tcg-front ${isHolographic && isRevealed ? "holographic" : ""}`}>
+                <div className={`tcg-front ${isGold && isRevealed ? "gold-flair" : ""} ${isHolo && isRevealed ? "holo-flair" : ""}`}>
                     <div className="img">
                         <Image src={imagePath} alt={character.name} fill className="object-cover" priority={isOverlay} />
 
@@ -85,15 +91,11 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
                     <div className="tcg-front-content">
                         <div className="flex justify-between items-start w-full">
                             <small className="badge flex items-center gap-1.5 text-xs font-bold text-white shadow-lg border-yellow-500/30">
-                                <Star className={`w-3 h-3 ${isHolographic ? 'text-yellow-300 fill-yellow-300 animate-pulse' : 'text-zinc-400'}`} />
+                                <Star className={`w-3 h-3 ${(isGold || isHolo) ? 'text-yellow-300 fill-yellow-300 animate-pulse' : 'text-zinc-400'}`} />
                                 {character.avgRating.toFixed(2)}
                             </small>
 
-                            {isHolographic && (
-                                <div className="px-2 py-0.5 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-[9px] font-black text-black uppercase tracking-tighter shadow-lg transform rotate-2 border border-white/20">
-                                    Rare
-                                </div>
-                            )}
+
                         </div>
 
                         {/* COMPACTED DESCRIPTION */}
@@ -120,7 +122,7 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
                     </div>
                 </div>
 
-                {isHolographic && isRevealed && (
+                {(isGold || isHolo) && isRevealed && (
                     <div
                         className="sparkle-container absolute inset-0 overflow-visible pointer-events-none z-50"
                         style={{ transform: "rotateY(180deg) translateZ(2px)" }}

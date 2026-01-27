@@ -11,9 +11,10 @@ interface CatalogProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
+    revealedNames: Set<string>;
 }
 
-export function Catalog({ characters, onSelect, currentPage, totalPages, onPageChange }: CatalogProps) {
+export function Catalog({ characters, onSelect, currentPage, totalPages, onPageChange, revealedNames }: CatalogProps) {
 
     return (
         <div className="space-y-4 flex flex-col items-center">
@@ -29,6 +30,7 @@ export function Catalog({ characters, onSelect, currentPage, totalPages, onPageC
                         <Card
                             character={char}
                             className="hover:scale-105 transition-transform duration-300"
+                            isRevealed={revealedNames.has(char.name)}
                         />
                     </motion.div>
                 ))}

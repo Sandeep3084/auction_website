@@ -75,8 +75,8 @@
 
 /* TCG Card Styles */
 .tcg-card {
-  width: 176px;
-  height: 248px;
+  width: 190px;
+  height: 280px;
 }
 
 .tcg-content {
@@ -116,7 +116,7 @@
   position: absolute;
   content: ' ';
   display: block;
-  width: 180px;
+  width: 300px;
   height: 200%;
   background: linear-gradient(90deg, transparent, #ff9966, #ff4433, #ff9966, transparent);
   animation: rotation_481 3000ms infinite linear;
@@ -167,8 +167,8 @@
   z-index: 10;
 }
 
-/* === GOLD FOIL EFFECT (Only for Rare) === */
-.tcg-front.holographic {
+/* === GOLD FLAIR (Max Stat 5) === */
+.tcg-front.gold-flair {
   box-shadow:
     0 0 20px rgba(255, 215, 0, 0.3),
     inset 0 0 10px rgba(255, 255, 255, 0.2);
@@ -176,7 +176,12 @@
   overflow: hidden;
 }
 
-.tcg-front.holographic::before {
+/* === HOLO FLAIR (Avg > 4) === */
+.tcg-front.holo-flair {
+  overflow: hidden;
+}
+
+.tcg-front.holo-flair::before {
   content: "";
   position: absolute;
   top: -50%;
@@ -219,8 +224,9 @@
   /* Default Low Opacity */
 }
 
-/* Slightly brighter for holographic cards to match the energy */
-.tcg-front.holographic .circle {
+/* Slightly brighter for holographic/gold cards to match the energy */
+.tcg-front.holo-flair .circle,
+.tcg-front.gold-flair .circle {
   opacity: 0.5;
 }
 
@@ -252,7 +258,7 @@
 
 #right {
   background-color: #ff2233;
-  left: 170px;
+  left: 210px;
   top: -60px;
   width: 40px;
   height: 40px;
