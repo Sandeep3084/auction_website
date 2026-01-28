@@ -57,18 +57,11 @@ export function CharacterAuction() {
         fetchCharacters();
     }, []);
 
+    // Control whether the selected card shows its front (image + stats)
     useEffect(() => {
-        let timer: NodeJS.Timeout;
-        if (selectedCharacter) {
-            setIsRevealed(false);
-
-            timer = setTimeout(() => {
-                setIsRevealed(true);
-            }, 600);
-        } else {
+        if (!selectedCharacter) {
             setIsRevealed(false);
         }
-        return () => clearTimeout(timer);
     }, [selectedCharacter]);
 
     const totalPages = Math.ceil(characters.length / ITEMS_PER_PAGE);
@@ -158,7 +151,11 @@ export function CharacterAuction() {
                                 isRevealed={isRevealed}
                                 isOverlay={true}
                                 className="scale-125 md:scale-150 shadow-[0_0_80px_rgba(59,130,246,0.2)]"
-                                onClick={() => { }}
+                                onClick={(e) => {
+                                    // Toggle front/back when the big card is clicked
+                                    e?.stopPropagation?.();
+                                    setIsRevealed((prev) => !prev);
+                                }}
                             />
                         </motion.div>
                     </motion.div>
@@ -176,7 +173,11 @@ export function CharacterAuction() {
                 <main className={`transition-all duration-500 ${selectedCharacter ? 'scale-95 pointer-events-none' : ''}`}>
                     <Catalog
                         characters={visibleCharacters}
-                        onSelect={setSelectedCharacter}
+                        onSelect={(char) => {
+                            setSelectedCharacter(char);
+                            // Immediately show front (image + stats) for selected card
+                            setIsRevealed(true);
+                        }}
                         currentPage={currentPage}
                         totalPages={totalPages}
                         onPageChange={setCurrentPage}
