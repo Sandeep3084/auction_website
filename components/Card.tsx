@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useMemo, useRef } from "react";
 import { Character, Attribute } from "@/lib/types";
 import { Star, Swords, Zap, Activity, Brain, Sparkles } from "lucide-react";
 import Image from "next/image";
@@ -21,6 +22,8 @@ const ATTRIBUTE_ICONS: Record<Attribute, React.ElementType> = {
     magic: Sparkles,
 };
 
+const ATTRIBUTES: Attribute[] = ["strength", "stamina", "dexterity", "intelligence", "magic"];
+
 const formatStatLabel = (key: string) => {
     const map: Record<string, string> = {
         strength: "STR",
@@ -32,27 +35,118 @@ const formatStatLabel = (key: string) => {
     return map[key] || key.substring(0, 3).toUpperCase();
 };
 
-export function Card({ character, isRevealed = false, onClick, className = "", isOverlay = false }: CardProps) {
-    const imagePath = `/images/${character.name.toLowerCase().replace(/ /g, "_")}.webp`;
-    const isGold = Math.max(character.strength, character.stamina, character.dexterity, character.intelligence, character.magic) === 5;
-    const isHolo = character.avgRating >= 4;
+function CardComponent({ character, isRevealed = false, onClick, className = "", isOverlay = false }: CardProps) {
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const rafRef = useRef<number | null>(null);
 
-    // MASSIVE BURST PARTICLES
-    const particles = Array.from({ length: 60 }).map((_, i) => ({
-        id: i,
-        angle: (Math.random() * 360) * (Math.PI / 180),
-        distance: 200 + Math.random() * 250,
-        delay: Math.random() * 0.2,
-        size: Math.random() * 6 + 3,
-        duration: 0.6 + Math.random() * 0.8
-    }));
+    const imagePath = useMemo(
+        () => `/images/${character.name.toLowerCase().replace(/ /g, "_")}.webp`,
+        [character.name]
+    );
+
+    const { isGold, isHolo } = useMemo(() => {
+        const maxStat = Math.max(
+            character.strength,
+            character.stamina,
+            character.dexterity,
+            character.intelligence,
+            character.magic
+        );
+
+        return {
+            isGold: maxStat === 5,
+            isHolo: character.avgRating >= 4,
+        };
+    }, [
+        character.strength,
+        character.stamina,
+        character.dexterity,
+        character.intelligence,
+        character.magic,
+        character.avgRating,
+    ]);
+
+    // MASSIVE BURST PARTICLES (memoized so we don't regenerate on every render)
+    const particles = useMemo(
+        () =>
+            Array.from({ length: 40 }).map((_, i) => ({
+                id: i,
+                angle: (Math.random() * 360) * (Math.PI / 180),
+                distance: 200 + Math.random() * 250,
+                delay: Math.random() * 0.2,
+                size: Math.random() * 6 + 3,
+                duration: 0.6 + Math.random() * 0.8,
+            })),
+        []
+    );
 
     return (
         <div
             className={`tcg-card cursor-pointer group ${isRevealed ? "flipped" : ""} ${isOverlay && !isRevealed ? "locked-hover" : ""} ${className}`}
             onClick={onClick}
+            onPointerMove={(e) => {
+                // Ignore touch (scroll), but allow trackpad/mouse/pen
+                if (e.pointerType === "touch") return;
+                const el = contentRef.current;
+                if (!el) return;
+                if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+                rafRef.current = requestAnimationFrame(() => {
+                    const rect = el.getBoundingClientRect();
+                    const px = (e.clientX - rect.left) / rect.width; // 0..1
+                    const py = (e.clientY - rect.top) / rect.height; // 0..1
+
+                    // Center around 0, clamp, and convert to degrees
+                    const dx = Math.max(-0.5, Math.min(0.5, px - 0.5));
+                    const dy = Math.max(-0.5, Math.min(0.5, py - 0.5));
+
+                    // "Tilt toward the cursor" (stronger): bottom pulls toward viewer, right pulls toward viewer
+                    const tiltX = `${(-dy * 26).toFixed(2)}deg`;
+                    const tiltY = `${(-dx * 34).toFixed(2)}deg`;
+
+                    el.style.setProperty("--tiltX", tiltX);
+                    el.style.setProperty("--tiltY", tiltY);
+                });
+            }}
+            onMouseMove={(e) => {
+                // Fallback for environments where pointer events are flaky/disabled
+                const el = contentRef.current;
+                if (!el) return;
+                if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+                rafRef.current = requestAnimationFrame(() => {
+                    const rect = el.getBoundingClientRect();
+                    const px = (e.clientX - rect.left) / rect.width; // 0..1
+                    const py = (e.clientY - rect.top) / rect.height; // 0..1
+
+                    const dx = Math.max(-0.5, Math.min(0.5, px - 0.5));
+                    const dy = Math.max(-0.5, Math.min(0.5, py - 0.5));
+
+                    const tiltX = `${(-dy * 26).toFixed(2)}deg`;
+                    const tiltY = `${(-dx * 34).toFixed(2)}deg`;
+
+                    el.style.setProperty("--tiltX", tiltX);
+                    el.style.setProperty("--tiltY", tiltY);
+                });
+            }}
+            onPointerLeave={() => {
+                const el = contentRef.current;
+                if (!el) return;
+                if (rafRef.current) cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+                el.style.setProperty("--tiltX", "0deg");
+                el.style.setProperty("--tiltY", "0deg");
+            }}
+            onMouseLeave={() => {
+                const el = contentRef.current;
+                if (!el) return;
+                if (rafRef.current) cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+                el.style.setProperty("--tiltX", "0deg");
+                el.style.setProperty("--tiltY", "0deg");
+            }}
         >
-            <div className="tcg-content relative">
+            <div ref={contentRef} className="tcg-content relative">
                 {/* BACK FACE */}
                 <div className="tcg-back">
                     <div className="tcg-back-content overflow-hidden rounded-[10px]">
@@ -88,6 +182,9 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
                         <div className="circle" id="bottom"></div>
                     </div>
 
+                    {/* Holographic foil overlay (CSS does the heavy lifting) */}
+                    {(isGold || isHolo) && isRevealed && <div className="tcg-holo-overlay" />}
+
                     <div className="tcg-front-content">
                         <div className="flex justify-between items-start w-full">
                             <small className="badge flex items-center gap-1.5 text-xs font-bold text-white shadow-lg border-yellow-500/30">
@@ -107,7 +204,7 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
                             </div>
 
                             <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[9px] text-zinc-400 font-mono">
-                                {(Object.keys(ATTRIBUTE_ICONS) as Attribute[]).map(attr => (
+                                {ATTRIBUTES.map((attr) => (
                                     <div key={attr} className="flex justify-start gap-3 items-center group/stat">
                                         <span className="uppercase font-bold text-zinc-500 group-hover/stat:text-zinc-300 transition-colors w-6">
                                             {formatStatLabel(attr)}
@@ -152,3 +249,5 @@ export function Card({ character, isRevealed = false, onClick, className = "", i
         </div>
     );
 }
+
+export const Card = React.memo(CardComponent);
